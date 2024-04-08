@@ -1,13 +1,9 @@
-# Import Flask and Flask-related modules
 from flask import Flask, request, jsonify, redirect
 
-# Initialize a new Flask application named app
 app = Flask(__name__)
 
-# Create an empty list of users
 users = []
 
-# Initialize list of products
 products = [
     {
         "id": 1,
@@ -83,19 +79,15 @@ products = [
 
 @app.route('/register', methods=['POST'])
 def register():
-    # Extract data from the request JSON
     data = request.json
 
-    # Extract the username, password, and email from the data
     username = data.get('username')
     password = data.get('password')
     email = data.get('email')
 
-    # Check if username already exists
     if any(user['username'] == username for user in users):
         return jsonify({'error': 'Username already exists'}), 400
 
-    # Add new user to the list
     users.append({'username': username, 'password': password, 'email': email})
     return jsonify({'message': 'User registered successfully'}), 201
 
@@ -106,14 +98,11 @@ def login():
     username = data.get('username')
     password = data.get('password')
 
-    # Check if username exists in the list of users
     user = next((user for user in users if user['username'] == username), None)
     if user is None:
         return jsonify({'error': 'Username not found'}), 404
 
-    # Verify password
     if user['password'] == password:
-        # Redirect user to the product page
         return redirect('/products')
     else:
         return jsonify({'error': 'Incorrect password'}), 401

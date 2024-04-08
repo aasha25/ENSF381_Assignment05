@@ -1,28 +1,20 @@
 import React, { useState } from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import LoginForm from './LoginForm';
 import SignupForm from './SignUpForm';
-import Footer from './Footer';
 
 const LoginPage = () => {
-  const [showLoginForm, setShowLoginForm] = useState(true);
+  const [showLogin, setShowLogin] = useState(true);
 
-  const switchToSignup = () => {
-    setShowLoginForm(false);
-  };
-
-  const switchToLogin = () => {
-    setShowLoginForm(true);
+  const toggleForm = () => {
+    setShowLogin(!showLogin);
   };
 
   return (
     <div>
       <Header />
-      {showLoginForm ? (
-        <LoginForm switchToSignup={switchToSignup} />
-      ) : (
-        <SignupForm switchToLogin={switchToLogin} />
-      )}
+      {showLogin ? <LoginForm onSwitch={toggleForm} /> : <SignupForm onSwitch={toggleForm} />}
       <Footer />
     </div>
   );

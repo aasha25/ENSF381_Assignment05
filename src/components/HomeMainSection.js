@@ -2,11 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const HomeMainSection = ({ reviews }) => {
-  // Function to generate star icons based on rating
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < rating; i++) {
-      stars.push(<span key={i}>&#9733;</span>); // Unicode for star character
+      stars.push(<span key={i}>&#9733;</span>);
     }
     return stars;
   };

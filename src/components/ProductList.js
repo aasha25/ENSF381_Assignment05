@@ -4,11 +4,11 @@ const ProductList = ({ onAddToCart }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('/products') // Assuming the backend serves the product data at the '/products' endpoint
+    fetch('/products') 
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch(error => console.error('Error fetching products:', error));
-  }, []); // Empty dependency array ensures useEffect runs only once after component mounts
+  }, []); 
 
   return (
     <div className="product-list">

@@ -37,3 +37,15 @@
     transform: rotate(360deg);
   }
 }
+
+div.error {
+  color: red !important;
+  font-size: 0.8em;
+  margin-top: -10px;
+}
+
+h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}

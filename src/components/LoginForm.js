@@ -1,48 +1,43 @@
 import React, { useState } from 'react';
-import Header from './Header'; // Assuming the header component file path
-import Footer from './Footer'; // Assuming the footer component file path
 
-const LoginForm = ({ switchToSignup }) => {
+const LoginForm = ({ onSwitch }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (username.trim() === '' || password.trim() === '') {
-      alert('Please enter both username and password');
-      return;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (username && password) {
+      console.log('Login Submitted', { username, password });
     }
-    // Handle login
   };
 
   return (
-    <>
-      <Header />
+    <form onSubmit={handleSubmit}>
       <div>
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit">Login</button>
-        </form>
-        <button onClick={switchToSignup}>Switch to Signup</button>
+        <label>Username:</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Enter username"
+        />
       </div>
-      <Footer />
-    </>
+      <div>
+        <label>Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter password"
+        />
+      </div>
+      <div>
+        <button type="submit">Login</button>
+      </div>
+      <div> 
+        <button type="button" onClick={onSwitch}>Switch to Signup</button>
+      </div>
+    </form>
   );
 };
 

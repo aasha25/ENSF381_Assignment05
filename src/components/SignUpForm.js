@@ -1,75 +1,92 @@
 import React, { useState } from 'react';
-import Header from './Header';
-import Footer from './Footer';
 
-const SignupForm = ({ switchToLogin }) => {
+const SignupForm = ({ onSwitch }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [generalError, setGeneralError] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      username.trim() === '' ||
-      password.trim() === '' ||
-      confirmPassword.trim() === '' ||
-      email.trim() === ''
-    ) {
-      alert('Please fill in all fields');
-      return;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let formErrors = {};
+    let hasErrors = false;
+
+    setGeneralError('');
+
+    if (!username || !password || !confirmPassword || !email) {
+      formErrors.general = 'All fields are required!';
+      hasErrors = true;
     }
+
     if (password !== confirmPassword) {
-      alert('Password and confirm password do not match');
+      formErrors.passwordsMatch = 'Passwords do not match!';
+      hasErrors = true;
+    }
+
+    if (hasErrors) {
+      setGeneralError(formErrors.general || formErrors.passwordsMatch);
       return;
     }
-    // Handle signup
+
+    console.log('Signup Submitted', { username, password, email });
   };
 
   return (
-    <>
-      <Header />
-      <div>
-        <h2>Sign Up</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <button type="submit">Sign Up</button>
-        </form>
-        <button onClick={switchToLogin}>Switch to Login</button>
+    <div>
+      <h2>Signup</h2>
+      {generalError && (
+        <div style={{ color: 'red'}}>
+          <div className="error">{generalError}</div>
+          <div style={{ height: '1em' }}></div> 
+        </div>
+      )}
+      <form onSubmit={handleSubmit}>
+
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter username"
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter password"
+          />
+        </div>
+        <div>
+          <label>Confirm Password:</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm password"
+          />
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter email"
+          />
+        </div>
+        <div>
+        <button type="submit">Signup</button>
       </div>
-      <Footer />
-    </>
+      <div> 
+        <button type="button" onClick={onSwitch}>Switch to Login</button>
+      </div>
+      </form>
+    </div>
   );
 };
 
