@@ -4,8 +4,13 @@ const ProductList = ({ onAddToCart }) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('/products') 
-      .then(response => response.json())
+    fetch('http://localhost:3000/products')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => setProducts(data))
       .catch(error => console.error('Error fetching products:', error));
   }, []); 
@@ -28,4 +33,3 @@ const ProductList = ({ onAddToCart }) => {
 };
 
 export default ProductList;
-

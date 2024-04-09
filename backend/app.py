@@ -10,7 +10,7 @@ products = [
         "name": "Product 1",
         "description": "Description for Product 1",
         "price": 10.99,
-        "image": 'images/product1.png'
+        "image": 'public/images/product1.png'
     },
     {
         "id": 2,
@@ -106,6 +106,7 @@ def login():
         return redirect('/products')
     else:
         return jsonify({'error': 'Incorrect password'}), 401
+
     
 @app.route('/products', methods=['GET'])
 def get_products():
@@ -114,3 +115,4 @@ def get_products():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
